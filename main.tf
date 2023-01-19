@@ -16,7 +16,7 @@ terraform {
 
   backend "azurerm" {
     resource_group_name  = "remote-state"
-    storage_account_name = "danielgilremotestate"
+    storage_account_name = "brunocrremotestate"
     container_name       = "remote-state"
     key                  = "pipeline-github-actions/terraform.tfstate"
   }
@@ -30,18 +30,17 @@ data "terraform_remote_state" "vnet" {
   backend = "azurerm"
   config = {
     resource_group_name  = "remote-state"
-    storage_account_name = "danielgilremotestate"
+    storage_account_name = "brunocrremotestate"
     container_name       = "remote-state"
     key                  = "azure-vnet/terraform.tfstate"
   }
 }
 
 provider "aws" {
-  region = "eu-central-1"
-
+  region = "sa-east-1"
   default_tags {
     tags = {
-      owner      = "danielgil"
+      owner      = "bruno-cr"
       managed-by = "terraform"
     }
   }
@@ -50,8 +49,8 @@ provider "aws" {
 data "terraform_remote_state" "vpc" {
   backend = "s3"
   config = {
-    bucket = "danielgil-remote-state"
+    bucket = "bruno-cr-remote-state"
     key    = "aws-vpc/terraform.tfstate"
-    region = "eu-central-1"
+    region = "sa-east-1"
   }
 }
